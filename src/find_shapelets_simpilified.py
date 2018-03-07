@@ -345,6 +345,7 @@ def main():
     list_dict = separate_state(dict_training_data)
     data, targets = separating_list_dict(list_dict)
     ndata, ntargets = list_to_ndarray(data, targets)
+    #hello
 
     #data, ground_truth = import_db()
     #display_shapelet_data(data, ground_truth)
