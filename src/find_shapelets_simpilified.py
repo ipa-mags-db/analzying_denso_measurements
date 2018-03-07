@@ -347,6 +347,8 @@ def main():
     ndata, ntargets = list_to_ndarray(data, targets)
     #hello
     #world
+    #hello world
+
 
     #data, ground_truth = import_db()
     #display_shapelet_data(data, ground_truth)
