@@ -341,10 +341,29 @@ def list_to_ndarray(data,targets):
 
 def printing_shapelet_data(data, ground_truth):
     print "ground_truth", ground_truth
-    print "data: ", data
+    #print "data: ", data
     
 
-
+def reform_ground_truth(ground_truth_shapelet):
+    print"type(ground_truth_shapelet): ", type(ground_truth_shapelet)
+    print"shape of ground_truth_shapelet array: ", ground_truth_shapelet.size
+    labels = list()
+    empty_idx = list()
+    for idx, data in  enumerate(ground_truth_shapelet):
+        if not bool(data.keys()):
+            print"empty dict"
+            empty_idx.append(idx)
+        else:
+            labels.append(data.keys()[0])
+    print"labels: ", labels
+    list_dict = []
+    for idx, dictionary in enumerate(ground_truth_shapelet):
+            if idx not in empty_idx:
+                simplified_dict = {labels[idx]: dictionary[labels[idx]]}
+                list_dict.append(simplified_dict)
+    arr_list_dict = np.array(list_dict)
+    print "simplified_dict: ", arr_list_dict
+    return arr_list_dict
 
 
 def main():
@@ -356,8 +375,9 @@ def main():
 
     data_shapelet, ground_truth_shapelet = import_db()
     printing_shapelet_data(data_shapelet, ground_truth_shapelet)
+    ground_truth_shapelet_reformed = reform_ground_truth(ground_truth_shapelet)
     #find_shapelet = ShapeletFinder()
-    #bsf_classifier, shapelets = find_shapelet.findingshapelets(data,ground_truth)
+    #bsf_classifier, shapelets = find_shapelet.findingshapelets(data_shapelet, ground_truth_shapelet_reformed)
 
 
 
