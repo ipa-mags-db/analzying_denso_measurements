@@ -323,18 +323,26 @@ def separating_list_dict(list_dict):
 
 def list_to_ndarray(data,targets):
 
-    list_df = []
+    '''
+    input: list of data and the corresponding list of targets
+    output: 
+    '''
+
+    list_nd_array = []
     for idx, dat in enumerate(data):
         df = pd.DataFrame(data[idx][0])
-        df=df.values
-        list_df.append(df)
-    targets = np.array(targets)
-    return list_df , targets
+        nd_array=df.values
+        list_nd_array.append(nd_array)
+    nd_targets = np.array(targets)
+    #print"nd_targets: ", nd_targets
+    #print "list_nd_array: ", list_nd_array
+    return list_nd_array , nd_targets
 
 
 def printing_shapelet_data(data, ground_truth):
-    print "data: ", data
     print "ground_truth", ground_truth
+    print "data: ", data
+    
 
 
 
@@ -343,15 +351,11 @@ def main():
 
     dict_training_data = get_training_data()
     list_dict = separate_state(dict_training_data)
-    data, targets = separating_list_dict(list_dict)
-    ndata, ntargets = list_to_ndarray(data, targets)
-    #hello
-    #world
-    #hello world
+    data_denso, targets_denso = separating_list_dict(list_dict)
+    list_nd_array, nd_targets = list_to_ndarray(data_denso, targets_denso)
 
-
-    #data, ground_truth = import_db()
-    #display_shapelet_data(data, ground_truth)
+    data_shapelet, ground_truth_shapelet = import_db()
+    printing_shapelet_data(data_shapelet, ground_truth_shapelet)
     #find_shapelet = ShapeletFinder()
     #bsf_classifier, shapelets = find_shapelet.findingshapelets(data,ground_truth)
 
