@@ -14,7 +14,7 @@ from clustering import Clustering
 from classifier import ShapeletClassifier
 import pandas as pd
 import pickle
-
+import random
 class ShapeletFinder(object):
     def __init__(self, d_max=.6, N_max=3, w_ext=25, sigma_min=None, sl_max=50):
         """
@@ -141,9 +141,7 @@ class ShapeletFinder(object):
         self.unique_labels = self.get_unique_targets(target)
         bsf_classifier = defaultdict(lambda: None)
         self.shapelets = dict()
-        print "data[0]: ", data[0]
         self.dimensions_subsets = list(powerset(range(data[0].shape[1])))[1:]
-        #print "dimension_subsets", self.dimensions_subsetsdimensions_subsets
 
         self.precompute_z_norm(data)
 
@@ -321,72 +319,95 @@ def separating_list_dict(list_dict):
         data.append(state_data.values())
     return data, targets
 
-def list_to_ndarray(data,targets):
+def list_to_ndarray(data,states):
 
     '''
     input: list of data and the corresponding list of targets
     output: 
     '''
-
+    list_states_dict = []
     list_nd_array = []
+    list_nd_time = []
     for idx, dat in enumerate(data):
         df = pd.DataFrame(data[idx][0])
         nd_array=df.values
+        nd_time = nd_array[:,0:1]
+        nd_array = nd_array[0:-1,1:4]
         list_nd_array.append(nd_array)
-    nd_targets = np.array(targets)
+        list_nd_time.append(nd_time)
+
+    for idx, state in enumerate(states): 
+        state = tuple(state)
+        states_dict = {state[0]: [random.randint(50,320)]}
+        list_states_dict.append(states_dict)
+    nd_states_dict = np.array(list_states_dict)
+
+    #print "nd_time: ", list_nd_time
     #print"nd_targets: ", nd_targets
     #print "list_nd_array: ", list_nd_array
-    return list_nd_array , nd_targets
+    print "length of the data list of arries: ", len(list_nd_array)
+    print "shape of the states array", nd_states_dict.shape
+    return np.array(list_nd_array[0:15]), nd_states_dict[0:15]
 
-
-def printing_shapelet_data(data, ground_truth):
-    print "ground_truth", ground_truth
-    #print "data: ", data
-    
 
 def reform_ground_truth(ground_truth_shapelet):
-    print"type(ground_truth_shapelet): ", type(ground_truth_shapelet)
-    print"shape of ground_truth_shapelet array: ", ground_truth_shapelet.size
+
     labels = list()
     empty_idx = list()
     for idx, data in  enumerate(ground_truth_shapelet):
         if not bool(data.keys()):
-            print"empty dict"
+            #print"empty dict"
             empty_idx.append(idx)
         else:
             labels.append(data.keys()[0])
     for i in empty_idx:
             labels.insert(i, 'Null')
-    print"labels: ", labels
+    #print"labels: ", labels
     labels = np.array(labels)
     list_dict = []
-    print "ground_truth_shapelet: ", ground_truth_shapelet
-    print "Finishing..."
     for idx, dictionary in enumerate(ground_truth_shapelet):
         if idx not in empty_idx:
-            print"dictionary: ", dictionary
-            print "dictionary[labels[idx]]", dictionary[labels[idx]]
             simplified_dict = {labels[idx]: dictionary[labels[idx]]}
             list_dict.append(simplified_dict)
+    for i in empty_idx:
+        list_dict.insert(i, '{}')
+
     arr_list_dict = np.array(list_dict)
-    print "simplified_dict: ", arr_list_dict
+    #print "simplified_dict: ", arr_list_dict
     return arr_list_dict
+
+
+def printing_shapelet_data(data, ground_truth):
+
+    print "ground_truth: ", ground_truth
+    print "data: ", data
+    #print "len(data)", len(data)
+    #print "size of first array: ", data[1].shape
+    
+
+def printing_denso_data(list_nd_array, nd_states_dict):
+
+    print "nd_states_dict: ", nd_states_dict
+    print "list_nd_array: ", list_nd_array
 
 
 def main():
 
     dict_training_data = get_training_data()
     list_dict = separate_state(dict_training_data)
-    data_denso, targets_denso = separating_list_dict(list_dict)
-    list_nd_array, nd_targets = list_to_ndarray(data_denso, targets_denso)
+    data_denso, states_denso = separating_list_dict(list_dict)
+    list_nd_array, nd_states_dict = list_to_ndarray(data_denso, states_denso)
+    #printing_denso_data(list_nd_array, nd_states_dict)
+
 
     data_shapelet, ground_truth_shapelet = import_db()
-    printing_shapelet_data(data_shapelet, ground_truth_shapelet)
     ground_truth_shapelet_reformed = reform_ground_truth(ground_truth_shapelet)
-    #find_shapelet = ShapeletFinder()
+    #printing_shapelet_data(data_shapelet, ground_truth_shapelet_reformed)
+    find_shapelet = ShapeletFinder()
     #bsf_classifier, shapelets = find_shapelet.findingshapelets(data_shapelet, ground_truth_shapelet_reformed)
+    bsf_classifier, shapelets = find_shapelet.findingshapelets(list_nd_array, nd_states_dict)
 
-
+    print "Finishing...."
 
 
 if __name__ == '__main__':
