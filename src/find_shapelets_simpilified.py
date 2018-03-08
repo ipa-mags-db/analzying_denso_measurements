@@ -355,12 +355,19 @@ def reform_ground_truth(ground_truth_shapelet):
             empty_idx.append(idx)
         else:
             labels.append(data.keys()[0])
+    for i in empty_idx:
+            labels.insert(i, 'Null')
     print"labels: ", labels
+    labels = np.array(labels)
     list_dict = []
+    print "ground_truth_shapelet: ", ground_truth_shapelet
+    print "Finishing..."
     for idx, dictionary in enumerate(ground_truth_shapelet):
-            if idx not in empty_idx:
-                simplified_dict = {labels[idx]: dictionary[labels[idx]]}
-                list_dict.append(simplified_dict)
+        if idx not in empty_idx:
+            print"dictionary: ", dictionary
+            print "dictionary[labels[idx]]", dictionary[labels[idx]]
+            simplified_dict = {labels[idx]: dictionary[labels[idx]]}
+            list_dict.append(simplified_dict)
     arr_list_dict = np.array(list_dict)
     print "simplified_dict: ", arr_list_dict
     return arr_list_dict
