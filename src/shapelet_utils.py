@@ -73,6 +73,8 @@ def dist_shapelet_ts(s, t, dim_s):
     subs = z_normalize(subs)  # (len(x), len(shapelet), axis)
     return distances(s, subs[:, :, dim_s]).mean(axis=1)  # (len(x),)
 
+cnt = 0
+
 
 def z_normalize(t):
     """
@@ -81,6 +83,15 @@ def z_normalize(t):
     :return: list of z-normalized time series subsequences
     :rtype: np.array, shape = (len(t), len(s), len(dim(s)))
     """
+    global cnt
+    cnt+=1
+    print "cnt: ",cnt
+    print"", t[15]
+    #print"len(t): ",len(t)
+    #for idx,row in enumerate(t):
+        #print"idx: ", idx
+        #print"row: ", row
+
     std = np.std(t, axis=1)
     if isinstance(std, float):
         if std < sigma_min:

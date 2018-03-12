@@ -336,6 +336,10 @@ def list_to_ndarray(data,states):
         list_nd_array.append(nd_array)
         list_nd_time.append(nd_time)
 
+    #print "list_nd_array", list_nd_array
+    arr_list_nd_array = np.array(list_nd_array)
+    #print "arr_list_nd_array", arr_list_nd_array
+
     for idx, state in enumerate(states): 
         state = tuple(state)
         states_dict = {state[0]: [random.randint(50,320)]}
@@ -344,10 +348,10 @@ def list_to_ndarray(data,states):
 
     #print "nd_time: ", list_nd_time
     #print"nd_targets: ", nd_targets
-    #print "list_nd_array: ", list_nd_array
-    print "length of the data list of arries: ", len(list_nd_array)
-    print "shape of the states array", nd_states_dict.shape
-    return np.array(list_nd_array[0:15]), nd_states_dict[0:15]
+    #print "nd_states_dict: ", nd_states_dict
+    #print "length of the data list of arries: ", len(list_nd_array)
+    #print "shape of the states array", nd_states_dict.shape
+    return arr_list_nd_array, nd_states_dict
 
 
 def reform_ground_truth(ground_truth_shapelet):
@@ -379,17 +383,17 @@ def reform_ground_truth(ground_truth_shapelet):
 
 def printing_shapelet_data(data, ground_truth):
 
-    print "ground_truth: ", ground_truth
-    print "data: ", data
-    #print "len(data)", len(data)
-    #print "size of first array: ", data[1].shape
+    #print "ground_truth: ", ground_truth
+    #print "data: ", data
+    print "data.shape", len(data)
     
 
 def printing_denso_data(list_nd_array, nd_states_dict):
 
     print "nd_states_dict: ", nd_states_dict
-    print "list_nd_array: ", list_nd_array
-
+    #print "list_nd_array: ", list_nd_array
+    #print "len(list_nd_array)", len(list_nd_array)
+    #print "len(nd_states_dict) ", len(nd_states_dict)
 
 def main():
 
