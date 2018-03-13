@@ -4,7 +4,7 @@ import numpy as np
 import time
 from collections import defaultdict
 from scipy.signal._peak_finding import argrelmax, argrelmin
-import pylab as plt
+#import pylab as plt
 from sklearn.cross_validation import KFold
 from import_csv_db import import_db
 from utilities import keydefaultdict, powerset, find_nearest, Counter
@@ -207,6 +207,7 @@ class ShapeletFinder(object):
         :param data: list of training examples
         :type data: np.array
         """
+
         self.z_data = dict()
         for w in self.windows:
             for ts_id, ts in enumerate(data):
@@ -338,6 +339,7 @@ def list_to_ndarray(data,states):
 
     #print "list_nd_array", list_nd_array
     arr_list_nd_array = np.array(list_nd_array)
+
     #print "arr_list_nd_array", arr_list_nd_array
 
     for idx, state in enumerate(states): 
@@ -352,6 +354,28 @@ def list_to_ndarray(data,states):
     #print "length of the data list of arries: ", len(list_nd_array)
     #print "shape of the states array", nd_states_dict.shape
     return arr_list_nd_array, nd_states_dict
+
+def removing_faulty_readings(list_nd_array, nd_states_dict):
+
+    unfaulty_list_nd_array = list()
+    idx_fault = list()
+    #print "len(list_nd_array): ", len(list_nd_array)
+    for idx, data in enumerate(list_nd_array):
+        if not data.size:
+            idx_fault.append(idx)
+        else:
+            unfaulty_list_nd_array.append(data)
+    #print "list_unfaulty_nd_array: ",list_unfaulty_nd_array
+    #print "list of faulty indexes", idx_fault
+    #print "len(list_unfaulty_nd_array): ", len(unfaulty_list_nd_array)
+
+    unfaulty_nd_states_dict = np.delete(nd_states_dict, idx_fault)
+    #print "len(unfaulty_nd_states_dict)", len(unfaulty_nd_states_dict)
+
+    return np.array(unfaulty_list_nd_array), np.array(unfaulty_nd_states_dict)
+
+
+
 
 
 def reform_ground_truth(ground_truth_shapelet):
@@ -383,17 +407,18 @@ def reform_ground_truth(ground_truth_shapelet):
 
 def printing_shapelet_data(data, ground_truth):
 
-    #print "ground_truth: ", ground_truth
+    print "ground_truth: ", ground_truth
     #print "data: ", data
-    print "data.shape", len(data)
-    
+    print "shape.data)", data.shape
+    #print "shape.ground_truth", ground_truth.shape
+
 
 def printing_denso_data(list_nd_array, nd_states_dict):
 
     print "nd_states_dict: ", nd_states_dict
     #print "list_nd_array: ", list_nd_array
-    #print "len(list_nd_array)", len(list_nd_array)
-    #print "len(nd_states_dict) ", len(nd_states_dict)
+    print "list_nd_array.shape", list_nd_array.shape
+    print "nd_states_dict.shape ", nd_states_dict.shape
 
 def main():
 
@@ -401,15 +426,16 @@ def main():
     list_dict = separate_state(dict_training_data)
     data_denso, states_denso = separating_list_dict(list_dict)
     list_nd_array, nd_states_dict = list_to_ndarray(data_denso, states_denso)
-    #printing_denso_data(list_nd_array, nd_states_dict)
+    unfaulty_list_nd_array, unfaulty_nd_states_dict= removing_faulty_readings(list_nd_array, nd_states_dict)
+    #printing_denso_data(unfaulty_list_nd_array, unfaulty_nd_states_dict)
 
 
     data_shapelet, ground_truth_shapelet = import_db()
     ground_truth_shapelet_reformed = reform_ground_truth(ground_truth_shapelet)
     #printing_shapelet_data(data_shapelet, ground_truth_shapelet_reformed)
     find_shapelet = ShapeletFinder()
-    #bsf_classifier, shapelets = find_shapelet.findingshapelets(data_shapelet, ground_truth_shapelet_reformed)
-    bsf_classifier, shapelets = find_shapelet.findingshapelets(list_nd_array, nd_states_dict)
+    bsf_classifier, shapelets = find_shapelet.findingshapelets(data_shapelet, ground_truth_shapelet_reformed)
+    #bsf_classifier, shapelets = find_shapelet.findingshapelets(unfaulty_list_nd_array, unfaulty_nd_states_dict)
 
     print "Finishing...."
 
