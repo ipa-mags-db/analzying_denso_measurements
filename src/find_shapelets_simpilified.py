@@ -434,9 +434,8 @@ def main():
     ground_truth_shapelet_reformed = reform_ground_truth(ground_truth_shapelet)
     #printing_shapelet_data(data_shapelet, ground_truth_shapelet_reformed)
     find_shapelet = ShapeletFinder()
-    bsf_classifier, shapelets = find_shapelet.findingshapelets(data_shapelet, ground_truth_shapelet_reformed)
-    #bsf_classifier, shapelets = find_shapelet.findingshapelets(unfaulty_list_nd_array, unfaulty_nd_states_dict)
-
+    #bsf_classifier, shapelets = find_shapelet.findingshapelets(data_shapelet, ground_truth_shapelet_reformed)
+    bsf_classifier, shapelets = find_shapelet.findingshapelets(unfaulty_list_nd_array, unfaulty_nd_states_dict)
     print "Finishing...."
 
 
