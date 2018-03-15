@@ -500,11 +500,8 @@ def main():
     find_shapelet = ShapeletFinder()
     #bsf_classifier, shapelets = find_shapelet.findingshapelets(data_shapelet, ground_truth_shapelet_reformed)
     bsf_classifier, shapelets = find_shapelet.findingshapelets(unfaulty_list_nd_array, unfaulty_nd_states_dict)
-<<<<<<< HEAD
-=======
     saving_generated_shapelets(shapelets)
     plot_all_shapelets(bsf_classifier)
->>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
     print "Finishing...."
 
 

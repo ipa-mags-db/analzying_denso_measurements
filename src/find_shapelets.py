@@ -13,6 +13,7 @@ from shapelet_utils import subsequences, z_normalize, distance_matrix3D
 import shapelet_utils
 from clustering import Clustering
 from classifier import ShapeletClassifier
+from find_shapelets_simpilified import get_training_data,separate_state,separating_list_dict,list_to_ndarray, removing_faulty_readings
 
 BLUE = "#2b83ba"
 RED = "#d7191c"
@@ -186,7 +187,7 @@ class ShapeletFinder(object):
                             bsf_classifier[label] = classifier
                     c.printProgress(ds_i * len(self.windows) + w_i + 1)
             bsf_classifier[label] = bsf_classifier[label], binary_target
-        return bsf_classifier
+        return bsf_classifier, shapelets
 
     def precompute_bmd(self, data):
         """
@@ -432,7 +433,7 @@ class Evaluation(object):
                                 if mode == "cv":
                                     print("fold #{}".format(fold_i))
                                 t = time.time()
-                                result = sml.findingshapelets(data[train_idx], target[train_idx])
+                                result, shapelets = sml.findingshapelets(data[train_idx], target[train_idx])
                                 times.append(time.time() - t)
                                 for i in test_idx:
                                     x = data[i]
@@ -460,7 +461,7 @@ class Evaluation(object):
 
         if result_file_name != "":
             self.save_results(results, "{}".format(result_file_name))
-        return result
+        return result, shapelets
 
     def save_results(self, results, filename="result1"):
         with open(filename + ".csv", 'wb') as csvfile:
@@ -589,16 +590,18 @@ def plot_all_shapelets(result):
 
 
 def main(mode):
+
+
     data, ground_truth = import_db()
     evaluation = Evaluation(c=ShapeletFinder, d_max=[.5], N_max=[3], w_ext=[25], sigma_min=[None], sl_max=[50])
     if mode == "cv":
         result = evaluation.eval(data, ground_truth, mode="cv")  # 10-fold cross validation
     elif mode == "10":
-        result = evaluation.eval(data, ground_truth, mode=10)  # 90% train 10% test
+        result, shapelets = evaluation.eval(data, ground_truth, mode=10)  # 90% train 10% test
     elif mode == "all":
         result = evaluation.eval(data, ground_truth, mode=None) # 100% train and test=train
 
-    plot_all_shapelets(result)
+    #plot_all_shapelets(result)
 
 
 if __name__ == '__main__':
