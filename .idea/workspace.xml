@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="12cd3f97-00d6-406f-99f5-80209ba9c471" name="Default" comment="still fixing the shapelets error">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/find_shapelets_simpilified.py" afterPath="$PROJECT_DIR$/src/find_shapelets_simpilified.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shapelet_utils.py" afterPath="$PROJECT_DIR$/src/shapelet_utils.py" />
+=======
+    <list default="true" id="2bac94ab-7b35-4ef9-86e9-220a1a08b56d" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/dataset/data.dat" afterPath="$PROJECT_DIR$/dataset/data.dat" />
+      <change beforePath="$PROJECT_DIR$/src/find_shapelets_simpilified.py" afterPath="$PROJECT_DIR$/src/find_shapelets_simpilified.py" />
+      <change beforePath="$PROJECT_DIR$/src/import_csv_db.py" afterPath="$PROJECT_DIR$/src/import_csv_db.py" />
+      <change beforePath="$PROJECT_DIR$/src/shapelet_utils.py" afterPath="$PROJECT_DIR$/src/shapelet_utils.py" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,6 +25,7 @@
       <file leaf-file-name="find_shapelets_simpilified.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/find_shapelets_simpilified.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="333">
               <caret line="343" column="0" lean-forward="true" selection-start-line="343" selection-start-column="0" selection-end-line="343" selection-end-column="0" />
               <folding>
@@ -29,6 +38,21 @@
                 <element signature="e#3551#4228#0" expanded="false" />
                 <element signature="e#4272#4744#0" expanded="false" />
               </folding>
+=======
+            <state relative-caret-position="248">
+              <caret line="313" column="56" lean-forward="false" selection-start-line="313" selection-start-column="56" selection-end-line="313" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="find_shapelets.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/find_shapelets.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-9654">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
             </state>
           </provider>
         </entry>
@@ -37,6 +61,7 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+<<<<<<< HEAD
       <find>target</find>
       <find>self.target</find>
       <find>self.data</find>
@@ -64,6 +89,10 @@
     <dirStrings>
       <dir>$PROJECT_DIR$/src</dir>
     </dirStrings>
+=======
+      <find>cnt</find>
+    </findStrings>
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -73,16 +102,26 @@
       <list>
         <option value="$PROJECT_DIR$/src/import_csv_db.py" />
         <option value="$PROJECT_DIR$/src/shapelet_utils.py" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/classifier.py" />
+=======
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
         <option value="$PROJECT_DIR$/src/find_shapelets_simpilified.py" />
       </list>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="65" />
     <option name="y" value="-4" />
     <option name="width" value="928" />
     <option name="height" value="1204" />
+=======
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="676" />
+    <option name="width" value="697" />
+    <option name="height" value="768" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -100,11 +139,15 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+<<<<<<< HEAD
       <pane id="Scratches" />
+=======
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
+<<<<<<< HEAD
               <item name="analzying_denso_measurements" type="b2602c69:ProjectViewProjectNode" />
               <item name="analzying_denso_measurements" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -116,15 +159,31 @@
             <path>
               <item name="analzying_denso_measurements" type="b2602c69:ProjectViewProjectNode" />
               <item name="analzying_denso_measurements" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="analyzing_denso_measurements" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzing_denso_measurements" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="analyzing_denso_measurements" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzing_denso_measurements" type="462c0819:PsiDirectoryNode" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+<<<<<<< HEAD
     </panes>
   </component>
   <component name="PropertiesComponent">
+=======
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -139,7 +198,11 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Python.find_shapelets_simpilified">
+=======
+  <component name="RunManager">
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
     <configuration name="find_shapelets_simpilified" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -151,11 +214,19 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+<<<<<<< HEAD
       <module name="analzying_denso_measurements" />
+=======
+      <module name="analyzing_denso_measurements" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/find_shapelets_simpilified.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+<<<<<<< HEAD
+=======
+      <option name="MODULE_MODE" value="false" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
     </configuration>
     <recent_temporary>
       <list size="1">
@@ -171,6 +242,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
       <changelist id="12cd3f97-00d6-406f-99f5-80209ba9c471" name="Default" comment="" />
       <created>1520412883480</created>
       <option name="number" value="Default" />
@@ -252,6 +324,32 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39255813" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3410724" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+=======
+      <changelist id="2bac94ab-7b35-4ef9-86e9-220a1a08b56d" name="Default" comment="" />
+      <created>1520973277554</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1520973277554</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="676" y="0" width="697" height="768" extended-state="1" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6563877" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4054054" sideWeight="0.2143906" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.49707174" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22003035" sideWeight="0.56076133" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39407408" sideWeight="0.7856094" order="3" side_tool="false" content_ui="tabs" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -263,6 +361,7 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+<<<<<<< HEAD
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Hello world commit" />
     <MESSAGE value="adding_jupyter_note" />
@@ -273,11 +372,14 @@
     <MESSAGE value="Fixing some errors in denso data" />
     <option name="LAST_COMMIT_MESSAGE" value="Fixing some errors in denso data" />
   </component>
+=======
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/find_shapelets_simpilified.py</url>
+<<<<<<< HEAD
           <line>254</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
@@ -293,6 +395,13 @@
         </breakpoint>
       </default-breakpoints>
       <option name="time" value="45" />
+=======
+          <line>309</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="4" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -301,6 +410,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+<<<<<<< HEAD
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#660#1286#0" expanded="false" />
@@ -352,6 +462,9 @@
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
+=======
+          <folding />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
         </state>
       </provider>
     </entry>
@@ -359,6 +472,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+<<<<<<< HEAD
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#660#1286#0" expanded="false" />
@@ -407,11 +521,31 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="167" column="0" lean-forward="false" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+=======
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/pickle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="1383" column="0" lean-forward="false" selection-start-line="1383" selection-start-column="0" selection-end-line="1383" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/data.dat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/import_csv_db.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="198">
           <caret line="11" column="60" lean-forward="false" selection-start-line="11" selection-start-column="60" selection-end-line="11" selection-end-column="60" />
         </state>
@@ -491,10 +625,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="5896" column="4" lean-forward="false" selection-start-line="5896" selection-start-column="4" selection-end-line="5896" selection-end-column="4" />
+=======
+        <state relative-caret-position="136">
+          <caret line="11" column="35" lean-forward="false" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file:///usr/lib/python2.7/dist-packages/numpy/lib/stride_tricks.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
@@ -506,12 +645,19 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
           <caret line="481" column="0" lean-forward="false" selection-start-line="481" selection-start-column="0" selection-end-line="481" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/shapelet_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-911">
+          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/find_shapelets.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="127">
           <caret line="164" column="25" lean-forward="false" selection-start-line="164" selection-start-column="16" selection-end-line="164" selection-end-column="25" />
           <folding />
@@ -522,10 +668,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="27" column="56" lean-forward="false" selection-start-line="27" selection-start-column="56" selection-end-line="27" selection-end-column="56" />
+=======
+        <state relative-caret-position="-9654">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/shapelet_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="580">
@@ -550,6 +701,13 @@
             <element signature="e#3551#4228#0" expanded="false" />
             <element signature="e#4272#4744#0" expanded="false" />
           </folding>
+=======
+    <entry file="file://$PROJECT_DIR$/src/find_shapelets_simpilified.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="313" column="56" lean-forward="false" selection-start-line="313" selection-start-column="56" selection-end-line="313" selection-end-column="56" />
+          <folding />
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
         </state>
       </provider>
     </entry>

@@ -4,7 +4,7 @@ import numpy as np
 import time
 from collections import defaultdict
 from scipy.signal._peak_finding import argrelmax, argrelmin
-#import pylab as plt
+import pylab as plt
 from sklearn.cross_validation import KFold
 from import_csv_db import import_db
 from utilities import keydefaultdict, powerset, find_nearest, Counter
@@ -12,9 +12,22 @@ from shapelet_utils import subsequences, z_normalize, distance_matrix3D
 import shapelet_utils
 from clustering import Clustering
 from classifier import ShapeletClassifier
+import matplotlib
 import pandas as pd
 import pickle
-import random
+
+BLUE = "#2b83ba"
+RED = "#d7191c"
+GREEN = '#abdda4'
+LT = 3
+FONTSIZE = 14
+colors = [RED, GREEN, BLUE, "k", "y", "m"]
+label = ["x", "y", "z", "rx", "ry", "rz"]
+import matplotlib
+
+matplotlib.rcParams.update({'font.size': FONTSIZE})
+
+
 class ShapeletFinder(object):
     def __init__(self, d_max=.6, N_max=3, w_ext=25, sigma_min=None, sl_max=50):
         """
@@ -278,8 +291,45 @@ class ShapeletFinder(object):
         return classifiers
 
 
+def plot_shapelet(ax, shapelet, axis, time=None, linethickness=LT, colors=colors, label=label):
+    if linethickness is None:
+        linethickness = LT
+    lines = dict()
+    for i, a in enumerate(axis):
+        if time is None:
+            lines[label[a]] = ax.plot(np.arange(0, shapelet.shape[0]), shapelet[:, i], color=colors[a], label=label[a],
+                                      linewidth=linethickness)[0]
+        else:
+            lines[label[a]] = ax.plot(time, shapelet[:, i], colors[a], label=label[a], linewidth=linethickness)[0]
+    return lines
+
+def plot_all_shapelets(result):
+    f, rows = plt.subplots(2, 2, sharex=True)
+    axs = list(rows[:, 0]) + list(rows[:, 1])
+    lines = dict()
+    classifiers = dict()
+    for i, (label, (classifier, _)) in enumerate(result.items()):
+        classifiers[label] = classifier
+    order = [("59d638667bfe0b5f22bd6424: Pick Erebus","Pick Erebus"), ("59d638667bfe0b5f22bd6427: Motek - White Part Unmount","Motek - White Part Unmount"), ("59d638667bfe0b5f22bd6446: Pitasc-Sub - White Part Mount Tilted","White Part Mount Tilted"),
+             ("59d638667bfe0b5f22bd645d: Mount Erebus","Mount Erebus")]
+    j = 0
+    for i, (label, title) in enumerate(order):
+        if classifiers.has_key(label):
+            classifier = classifiers[label]
+            axs[j].set_title(title)
+            lines.update(plot_shapelet(axs[j], classifier.shapelet, classifier.dim_s))
+            axs[j].set_xlim(0, 50)
+            plt.setp(axs[j].get_yticklabels(), visible=False)
+            j += 1
+    classifiers = sorted(lines.items(), key=lambda x: x[0])
+    plt.figlegend([x[1] for x in classifiers], [x[0] for x in classifiers], loc='lower center', ncol=5, labelspacing=0.)
+    plt.subplots_adjust(left=.05, bottom=.15, right=.95, top=.93, wspace=.12, hspace=.51)
+    plt.show()
+
+
 def get_training_data(): # getting the dictionary from the pickeled file
-    dict_training_data = pickle.load(open("../dataset/data.dat", "rb"))
+    with open("../dataset/data.dat", "rb") as file:
+        dict_training_data = pickle.load(file)
     #print "states: ",dict_training_data.keys()
     return dict_training_data
 
@@ -302,7 +352,7 @@ def separate_state(dict_training_data):
             data_state_dict = {key: data_list}
             #list_data_state_dict = list(data_state_dict)
             list_dict.append(data_state_dict)
-    return list_dict        
+    return list_dict
 
 
 def separating_list_dict(list_dict):
@@ -324,7 +374,7 @@ def list_to_ndarray(data,states):
 
     '''
     input: list of data and the corresponding list of targets
-    output: 
+    output:
     '''
     list_states_dict = []
     list_nd_array = []
@@ -333,7 +383,7 @@ def list_to_ndarray(data,states):
         df = pd.DataFrame(data[idx][0])
         nd_array=df.values
         nd_time = nd_array[:,0:1]
-        nd_array = nd_array[0:-1,1:4]
+        nd_array = nd_array[:,1:4]
         list_nd_array.append(nd_array)
         list_nd_time.append(nd_time)
 
@@ -342,9 +392,9 @@ def list_to_ndarray(data,states):
 
     #print "arr_list_nd_array", arr_list_nd_array
 
-    for idx, state in enumerate(states): 
+    for idx, state in enumerate(states):
         state = tuple(state)
-        states_dict = {state[0]: [random.randint(50,320)]}
+        states_dict = {state[0]: [idx]}
         list_states_dict.append(states_dict)
     nd_states_dict = np.array(list_states_dict)
 
@@ -353,9 +403,9 @@ def list_to_ndarray(data,states):
     #print "nd_states_dict: ", nd_states_dict
     #print "length of the data list of arries: ", len(list_nd_array)
     #print "shape of the states array", nd_states_dict.shape
-    return arr_list_nd_array, nd_states_dict
+    return arr_list_nd_array, nd_states_dict, list_nd_time
 
-def removing_faulty_readings(list_nd_array, nd_states_dict):
+def removing_faulty_readings(list_nd_array, nd_states_dict, list_nd_time):
 
     unfaulty_list_nd_array = list()
     idx_fault = list()
@@ -365,14 +415,16 @@ def removing_faulty_readings(list_nd_array, nd_states_dict):
             idx_fault.append(idx)
         else:
             unfaulty_list_nd_array.append(data)
-    #print "list_unfaulty_nd_array: ",list_unfaulty_nd_array
+    #print "list_unfaulty_nd_array: ", np.array(unfaulty_list_nd_array)
     #print "list of faulty indexes", idx_fault
     #print "len(list_unfaulty_nd_array): ", len(unfaulty_list_nd_array)
 
     unfaulty_nd_states_dict = np.delete(nd_states_dict, idx_fault)
+    unfaulty_list_nd_time = np.delete(list_nd_time, idx_fault)
     #print "len(unfaulty_nd_states_dict)", len(unfaulty_nd_states_dict)
+    #print "unfaulty_nd_states_dict: ",np.array(unfaulty_nd_states_dict)
 
-    return np.array(unfaulty_list_nd_array), np.array(unfaulty_nd_states_dict)
+    return np.array(unfaulty_list_nd_array)[137:147], np.array(unfaulty_nd_states_dict)[137:147], np.array(unfaulty_list_nd_time) # States of interests lie in this subset"White Part Mount Tilted"
 
 
 
@@ -413,21 +465,33 @@ def printing_shapelet_data(data, ground_truth):
     #print "shape.ground_truth", ground_truth.shape
 
 
-def printing_denso_data(list_nd_array, nd_states_dict):
+def printing_denso_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time):
 
-    print "nd_states_dict: ", nd_states_dict
+    #print "nd_states_dict: ", nd_states_dict
     #print "list_nd_array: ", list_nd_array
-    print "list_nd_array.shape", list_nd_array.shape
-    print "nd_states_dict.shape ", nd_states_dict.shape
+    print "unfaulty_list_nd_array.shape", len(unfaulty_list_nd_array[1])
+    print "unfaulty_nd_states_dict.shape ", len(unfaulty_nd_states_dict[0])
+    print "unfaulty_list_nd_time.shape ", len(unfaulty_list_nd_time[1])
+
+
+def save_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time):
+    pickle.dump(unfaulty_list_nd_array, open( "../denso_data/unfaulty_list_nd_array.dat", "wb" ))
+    pickle.dump(unfaulty_nd_states_dict, open( "../denso_data/unfaulty_nd_states_dict.dat", "wb" ))
+    pickle.dump(unfaulty_list_nd_time, open( "../denso_data/unfaulty_list_nd_time.dat", "wb" ))
+
+def saving_generated_shapelets(shapelets):
+                           
+    pickle.dump(dict(shapelets), open( "../shapelets_data/shapelets.dat", "wb" ))
 
 def main():
 
     dict_training_data = get_training_data()
     list_dict = separate_state(dict_training_data)
     data_denso, states_denso = separating_list_dict(list_dict)
-    list_nd_array, nd_states_dict = list_to_ndarray(data_denso, states_denso)
-    unfaulty_list_nd_array, unfaulty_nd_states_dict= removing_faulty_readings(list_nd_array, nd_states_dict)
-    #printing_denso_data(unfaulty_list_nd_array, unfaulty_nd_states_dict)
+    list_nd_array, nd_states_dict, list_nd_time = list_to_ndarray(data_denso, states_denso)
+    unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time= removing_faulty_readings(list_nd_array, nd_states_dict, list_nd_time)
+    save_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time)
+    printing_denso_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time)
 
 
     data_shapelet, ground_truth_shapelet = import_db()
@@ -436,6 +500,11 @@ def main():
     find_shapelet = ShapeletFinder()
     #bsf_classifier, shapelets = find_shapelet.findingshapelets(data_shapelet, ground_truth_shapelet_reformed)
     bsf_classifier, shapelets = find_shapelet.findingshapelets(unfaulty_list_nd_array, unfaulty_nd_states_dict)
+<<<<<<< HEAD
+=======
+    saving_generated_shapelets(shapelets)
+    plot_all_shapelets(bsf_classifier)
+>>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
     print "Finishing...."
 
 
