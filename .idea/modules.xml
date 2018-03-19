@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/.idea/analzying_denso_measurements.iml" filepath="$PROJECT_DIR$/.idea/analzying_denso_measurements.iml" />
-=======
       <module fileurl="file://$PROJECT_DIR$/.idea/analyzing_denso_measurements.iml" filepath="$PROJECT_DIR$/.idea/analyzing_denso_measurements.iml" />
->>>>>>> fbf4fe6bfbc044d50d993bcbfb992939645854d8
     </modules>
   </component>
 </project>

@@ -4,6 +4,8 @@ import numpy as np
 from shapelet_utils import dist_shapelet_ts, \
     information_gain
 from scipy.signal._peak_finding import argrelmax, argrelmin
+from copy import deepcopy
+
 
 
 class ShapeletClassifier(object):
@@ -46,9 +48,11 @@ class ShapeletClassifier(object):
         :rtype: np.array
         """
         ds = dist_shapelet_ts(self.shapelet, t, self.dim_s)
+        bmd_distance = deepcopy(ds)
         ds[ds >= self.delta] = self.delta
         mins = argrelmin(ds, order=self.shapelet.shape[0] // 2)[0]
-        return np.asarray(mins)
+        mins = np.asarray(mins)
+        return mins, bmd_distance # returning the BMD distance
 
     def train(self, data, target):
         """

@@ -180,6 +180,7 @@ class ShapeletFinder(object):
                     key = (label, dimension_subset, window)
                     classifier_candidates = self.build_classifier(self.shapelets[key], binary_target, label,
                                                                   dimension_subset)
+
                     for c_i, classifier in enumerate(classifier_candidates):
                         try:
                             if self.cmp_classifier(bsf_classifier[label], classifier) > 0:
@@ -288,7 +289,10 @@ class ShapeletFinder(object):
                                range(self.data.shape[0])])
             cls.fit_precomputed(dist_X, target)
             classifiers.append(cls)
-        return classifiers
+            cls_2 = ShapeletClassifier(shapelet, dim_s=dim_s)
+            self.information_gain, self.delta, self.f_c_delta = cls_2.fit_precomputed(dist_X, target)
+            delt, f_c_delt = self.delta, self.f_c_delta
+        return classifiers, delt, f_c_delt # returning a cls object and dist_X to be used later
 
 
 def plot_shapelet(ax, shapelet, axis, time=None, linethickness=LT, colors=colors, label=label):
@@ -424,10 +428,22 @@ def removing_faulty_readings(list_nd_array, nd_states_dict, list_nd_time):
     #print "len(unfaulty_nd_states_dict)", len(unfaulty_nd_states_dict)
     #print "unfaulty_nd_states_dict: ",np.array(unfaulty_nd_states_dict)
 
-    return np.array(unfaulty_list_nd_array)[137:147], np.array(unfaulty_nd_states_dict)[137:147], np.array(unfaulty_list_nd_time) # States of interests lie in this subset"White Part Mount Tilted"
+    return np.array(unfaulty_list_nd_array), np.array(unfaulty_nd_states_dict) , np.array(unfaulty_list_nd_time) # States of interests lie in this subset"White Part Mount Tilted"
 
 
+def extract_state_interest(unfaulty_list_nd_array, unfaulty_nd_states_dict):
+    states_interest = ['59d638667bfe0b5f22bd6443: Motek - White Part Mount Tilted','59d638667bfe0b5f22bd6446: Pitasc-Sub - White Part Mount Tilted']
+    #states_interest = ['59d638667bfe0b5f22bd6449: Pitasc - Insert Upright', '59d638667bfe0b5f22bd6420: Motek - Erebus Unmount']
+    data = []
+    states = []
+    for idx, state in enumerate(unfaulty_nd_states_dict):
+        for state_interest in states_interest:
+            if state.keys()[0] == state_interest:
+                state_dict = unfaulty_nd_states_dict[idx]
+                states.append(state_dict)
+                data.append(unfaulty_list_nd_array[idx])
 
+    return np.array(data), np.array(states)
 
 
 def reform_ground_truth(ground_truth_shapelet):
@@ -490,18 +506,19 @@ def main():
     data_denso, states_denso = separating_list_dict(list_dict)
     list_nd_array, nd_states_dict, list_nd_time = list_to_ndarray(data_denso, states_denso)
     unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time= removing_faulty_readings(list_nd_array, nd_states_dict, list_nd_time)
+    data_denso, states_denso = extract_state_interest(unfaulty_list_nd_array, unfaulty_nd_states_dict)
     save_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time)
     printing_denso_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time)
 
 
-    data_shapelet, ground_truth_shapelet = import_db()
-    ground_truth_shapelet_reformed = reform_ground_truth(ground_truth_shapelet)
+    #data_shapelet, ground_truth_shapelet = import_db()
+    #ground_truth_shapelet_reformed = reform_ground_truth(ground_truth_shapelet)
     #printing_shapelet_data(data_shapelet, ground_truth_shapelet_reformed)
     find_shapelet = ShapeletFinder()
     #bsf_classifier, shapelets = find_shapelet.findingshapelets(data_shapelet, ground_truth_shapelet_reformed)
-    bsf_classifier, shapelets = find_shapelet.findingshapelets(unfaulty_list_nd_array, unfaulty_nd_states_dict)
-    saving_generated_shapelets(shapelets)
-    plot_all_shapelets(bsf_classifier)
+    bsf_classifier, shapelets = find_shapelet.findingshapelets(data_denso, states_denso)
+    #saving_generated_shapelets(shapelets)
+    #plot_all_shapelets(bsf_classifier)
     print "Finishing...."
 
 

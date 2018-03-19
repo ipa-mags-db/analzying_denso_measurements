@@ -9,7 +9,7 @@ def import_db():
     """
     data = []
     target = []
-    with open('../shapelet_dataset/simplified_100_episodes_db.csv', 'r') as csvfile:
+    with open('../shapelet_dataset/simplified_20_episodes_db.csv', 'r') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=";")
         for row in reader:
             data.append(np.array([eval(row["x"]), eval(row["y"]), eval(row["z"])]).T)

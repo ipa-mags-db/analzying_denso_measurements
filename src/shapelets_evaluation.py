@@ -1,8 +1,11 @@
 import numpy as np
 from numpy.lib.stride_tricks import as_strided
-from find_shapelets_simpilified import get_training_data,separate_state,separating_list_dict,list_to_ndarray, removing_faulty_readings, ShapeletFinder
+from find_shapelets_simpilified import get_training_data,separate_state,separating_list_dict,list_to_ndarray, removing_faulty_readings, separate_state, ShapeletFinder
+from find_shapelets import ConfusionMatrix
+from collections import defaultdict
+from classifier import ShapeletClassifier
 import matplotlib.pyplot as plt
-import shapelet_utils
+
 
 dim_s = (0,)
 sigma_min = .3
@@ -83,33 +86,42 @@ def dist_shapelet_ts(s, t, dim_s):
     return distances(s, subs[:, :, dim_s]).mean(axis=1)  # (len(x),)
 
 
-def estimate_sigma_min(self):
-    """
-    Estimates $\sigma_{min}$ by using the maximum standard deviation of shapelets in time series
-    without label.
-    """
-    if self.sigma_min is None:
-        sigma_min = 0
-        for id, labels in enumerate(self.target):
-            if len(labels) == 0:
-                ts_subs = subsequences(self.data[id], min(self.windows))
-                sigma_min = max(sigma_min, ts_subs.std(axis=1).max())
-        print("sigma_min set to {}".format(sigma_min))
-        self.sigma_min = sigma_min
-    shapelet_utils.sigma_min = self.sigma_min
-    return self.sigma_min
-
-
 def divide_time_series(time_series):
-    time_series = time_series[0:1600]
-    sub_time_series = np.split(time_series, 32)
+    time_series = time_series[0:1000]
+    sub_time_series = np.split(time_series, 20)
     return sub_time_series
+
+def another_approach(self, time_series, bsf_classifier):
+
+    self.confusion_matrix = defaultdict(lambda: ConfusionMatrix())
+    x = time_series
+    for label, (classifier, _) in bsf_classifier.items():
+        self.confusion_matrix[label].deltas.append(classifier.delta)
+        try:
+            self.confusion_matrix[label].sec_ig.append(classifier.y)
+        except:
+            self.confusion_matrix[label].sec_ig.append(classifier.f_c_delta)
+
+        self.confusion_matrix[label].shapelet_lengths.append(
+            classifier.shapelet.shape[0])
+        self.confusion_matrix[label].axis.append(classifier.dim_s)
+        shapelet_length = classifier.shapelet.shape[0]
+        shapelet_matches = np.array(classifier.predict_all(x)) + shapelet_length // 2
 
 
 def main():
 
 
     dict_training_data = get_training_data()
+    data_of_interest = dict_training_data['59d638667bfe0b5f22bd6427: Motek - White Part Unmount'][0]
+    data = []
+    targets = []
+
+    for state_data in (data_of_interest):
+        data.append(state_data.values())
+    data_nd = np.array(data)
+    data_nd = data_nd[:,0:3]
+
     list_dict = separate_state(dict_training_data)
     data_denso, states_denso = separating_list_dict(list_dict)
     list_nd_array, nd_states_dict, list_nd_time = list_to_ndarray(data_denso, states_denso)
@@ -117,23 +129,30 @@ def main():
                                                                                                       nd_states_dict,list_nd_time)
     find_shapelet = ShapeletFinder()
     bsf_classifier, shapelets = find_shapelet.findingshapelets(unfaulty_list_nd_array, unfaulty_nd_states_dict)
-    dict_shapelets = dict(shapelets)
-    state_1 = '59d638667bfe0b5f22bd6427: Motek - White Part Unmount'
-    state_2 = '59d638667bfe0b5f22bd6424: Pick Erebus'
-    state_3 = '59d638667bfe0b5f22bd645d: Mount Erebus'
-    state_4 = '59d638667bfe0b5f22bd6446: Pitasc-Sub - White Part Mount Tilted'
+    states = ['59d638667bfe0b5f22bd6427: Motek - White Part Unmount', '59d638667bfe0b5f22bd6424: Pick Erebus',
+              '59d638667bfe0b5f22bd645d: Mount Erebus', '59d638667bfe0b5f22bd6446: Pitasc-Sub - White Part Mount Tilted']
+    time_series = data_nd
+    #distances = list()
+    time_indicies = []
+    #sub_time_series = divide_time_series(time_series)
+    shapelets_dict = dict(shapelets)
+    #for state in states:
+    # for shapelet in shapelets_dict[states[0]]:
+    #     classifier = ShapeletClassifier(shapelet)
+    #     classifier.delta = 0.6435830967784079
+    #     mins, ds = classifier.predict_all(time_series)
+    #     time_indicies.append(mins)
+    #     distances.append(ds)
+    another_approach(find_shapelet, time_series, bsf_classifier)
 
-    sigma_min = estimate_sigma_min(find_shapelet)
-    shapelets = dict_shapelets[state_1]
-    time_series = unfaulty_list_nd_array[0]
-    sub_time_series = divide_time_series(time_series)
-    distances = list()
-    for shapelet in shapelets:
-        for sub in sub_time_series:
-            distance = dist_shapelet_ts(shapelet, sub, dim_s)
-            distances.append(distance)
-    nd_distances = np.array(distances)
-    plt.plot(nd_distances)
+    #nd_distances = np.array(distances)
+    #classifier_threshold = 0.6435830967784079 # '59d638667bfe0b5f22bd6427: Motek - White Part Unmount'
+    # for distance in distances:
+    #     if distance < classifier_threshold:
+    #         print"Successful process!"
+    #         break
+
+    #plt.plot(nd_distances)
     plt.ylabel('BMD')
     plt.show()
     print "Finishing..."
