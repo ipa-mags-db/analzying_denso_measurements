@@ -3,10 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="fb015606-9deb-43c9-aa80-7b8ca6f88a6b" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/Pitcures/shapelets.png" afterPath="$PROJECT_DIR$/Pitcures/shapelets.png" />
+      <change beforePath="$PROJECT_DIR$/src/dataset_preparation.py" afterPath="$PROJECT_DIR$/src/dataset_preparation.py" />
       <change beforePath="$PROJECT_DIR$/src/find_shapelets_final.py" afterPath="" />
       <change beforePath="$PROJECT_DIR$/src/find_shapelets_simpilified.py" afterPath="$PROJECT_DIR$/src/find_shapelets_simpilified.py" />
-      <change beforePath="$PROJECT_DIR$/src/shapelets_evaluation.py" afterPath="$PROJECT_DIR$/src/shapelets_evaluation.py" />
-      <change beforePath="$PROJECT_DIR$/src/test.py" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,25 +17,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="find_shapelets_simpilified.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/find_shapelets_simpilified.py">
+      <file leaf-file-name="shapelets_evaluation.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/shapelets_evaluation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding>
-                <element signature="e#14776#15237#0" expanded="false" />
-                <element signature="e#15276#16501#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="-119">
+              <caret line="23" column="76" lean-forward="false" selection-start-line="23" selection-start-column="76" selection-end-line="23" selection-end-column="76" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shapelets_evaluation.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shapelets_evaluation.py">
+      <file leaf-file-name="find_shapelets_simpilified.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/find_shapelets_simpilified.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="23" column="76" lean-forward="false" selection-start-line="23" selection-start-column="76" selection-end-line="23" selection-end-column="76" />
-              <folding />
+            <state relative-caret-position="-70">
+              <caret line="374" column="0" lean-forward="false" selection-start-line="374" selection-start-column="0" selection-end-line="374" selection-end-column="0" />
+              <folding>
+                <element signature="e#22#37#0" expanded="true" />
+                <element signature="e#764#12185#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -43,8 +43,8 @@
       <file leaf-file-name="dataset_preparation.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/dataset_preparation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state relative-caret-position="303">
+              <caret line="164" column="22" lean-forward="false" selection-start-line="164" selection-start-column="4" selection-end-line="164" selection-end-column="22" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -91,7 +91,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="676" />
+    <option name="x" value="-7" />
     <option name="width" value="697" />
     <option name="height" value="775" />
   </component>
@@ -150,7 +150,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.dataset_preparation">
+  <component name="RunManager" selected="Python.find_shapelets_simpilified">
     <configuration name="dataset_preparation" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -250,9 +250,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.dataset_preparation" />
-        <item index="1" class="java.lang.String" itemvalue="Python.shapelets_evaluation" />
-        <item index="2" class="java.lang.String" itemvalue="Python.find_shapelets_simpilified" />
+        <item index="0" class="java.lang.String" itemvalue="Python.find_shapelets_simpilified" />
+        <item index="1" class="java.lang.String" itemvalue="Python.dataset_preparation" />
+        <item index="2" class="java.lang.String" itemvalue="Python.shapelets_evaluation" />
         <item index="3" class="java.lang.String" itemvalue="Python.find_shapelets_final" />
         <item index="4" class="java.lang.String" itemvalue="Python.find_shapelets" />
       </list>
@@ -283,11 +283,11 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.47111112" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47111112" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -313,15 +313,10 @@
           <line>420</line>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+        <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/find_shapelets.py</url>
           <line>451</line>
           <option name="timeStamp" value="105" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/find_shapelets_simpilified.py</url>
-          <line>340</line>
-          <option name="timeStamp" value="109" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -334,7 +329,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="115" />
+      <option name="time" value="116" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -378,7 +373,7 @@
         <state relative-caret-position="7446">
           <caret line="438" column="36" lean-forward="false" selection-start-line="438" selection-start-column="36" selection-end-line="438" selection-end-column="81" />
           <folding>
-            <element signature="e#22#37#0" expanded="false" />
+            <element signature="e#26217#26729#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -422,7 +417,7 @@
         <state relative-caret-position="7446">
           <caret line="438" column="36" lean-forward="false" selection-start-line="438" selection-start-column="36" selection-end-line="438" selection-end-column="81" />
           <folding>
-            <element signature="e#22#37#0" expanded="false" />
+            <element signature="e#26217#26729#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -571,16 +566,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/find_shapelets.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="451" column="0" lean-forward="false" selection-start-line="451" selection-start-column="0" selection-end-line="451" selection-end-column="0" />
-          <folding>
-            <element signature="e#22#37#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/find_shapelets_final.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
@@ -589,20 +574,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/matplotlib/pyplot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="1197" column="0" lean-forward="false" selection-start-line="1197" selection-start-column="0" selection-end-line="1197" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/find_shapelets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="550" column="0" lean-forward="false" selection-start-line="550" selection-start-column="0" selection-end-line="587" selection-end-column="14" />
+          <folding>
+            <element signature="e#26217#26729#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/find_shapelets_simpilified.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="-70">
+          <caret line="374" column="0" lean-forward="false" selection-start-line="374" selection-start-column="0" selection-end-line="374" selection-end-column="0" />
           <folding>
-            <element signature="e#14776#15237#0" expanded="false" />
-            <element signature="e#15276#16501#0" expanded="false" />
+            <element signature="e#22#37#0" expanded="true" />
+            <element signature="e#764#12185#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/shapelets_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
+        <state relative-caret-position="-119">
           <caret line="23" column="76" lean-forward="false" selection-start-line="23" selection-start-column="76" selection-end-line="23" selection-end-column="76" />
           <folding />
         </state>
@@ -610,8 +613,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dataset_preparation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state relative-caret-position="303">
+          <caret line="164" column="22" lean-forward="false" selection-start-line="164" selection-start-column="4" selection-end-line="164" selection-end-column="22" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

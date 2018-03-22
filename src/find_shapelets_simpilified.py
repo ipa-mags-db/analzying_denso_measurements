@@ -365,8 +365,9 @@ def plot_all_shapelets(result):
     classifiers = dict()
     for i, (label, (classifier, _)) in enumerate(result.items()):
         classifiers[label] = classifier
-    order = [("59d638667bfe0b5f22bd6424: Pick Erebus","Pick Erebus"), ("59d638667bfe0b5f22bd6427: Motek - White Part Unmount","Motek - White Part Unmount"), ("59d638667bfe0b5f22bd6446: Pitasc-Sub - White Part Mount Tilted","White Part Mount Tilted"),
-             ("59d638667bfe0b5f22bd645d: Mount Erebus","Mount Erebus")]
+    order = [('59d638667bfe0b5f22bd6420: Motek - Erebus Unmount', "Erebus Unmount"), ('59d638667bfe0b5f22bd6443: Motek - White Part Mount Tilted', "Motek - White Part Mount Tilted"),
+             ('59d638667bfe0b5f22bd6446: Pitasc-Sub - White Part Mount Tilted', "Pitasc-Sub - White Part Mount Tilted"),
+             ('59d638667bfe0b5f22bd6449: Pitasc - Insert Upright', "Pitasc - Insert Upright")]
     j = 0
     for i, (label, title) in enumerate(order):
         if classifiers.has_key(label):
@@ -390,7 +391,7 @@ def main(mode):
     if mode == "cv":
         result = evaluation.eval(data_denso, states_denso)
         print "Finishing.."
-    #plot_all_shapelets(result)
+    plot_all_shapelets(result)
 
 
 if __name__ == '__main__':

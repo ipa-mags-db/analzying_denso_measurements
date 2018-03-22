@@ -170,7 +170,7 @@ def bringup():
     data_denso, states_denso = dataset.extract_states_interest(unfaulty_list_nd_array, unfaulty_nd_states_dict)
     #dataset.save_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time)
     #dataset.printing_denso_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time)
-    return data_denso, states_denso, dict_training_data, unfaulty_list_nd_array
+    return data_denso, states_denso
 
 
 if __name__ =='__main__' :
