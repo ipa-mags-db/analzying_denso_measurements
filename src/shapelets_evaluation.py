@@ -29,7 +29,7 @@ def evaluation(dataset):
     """
     ts_data = []
     dict_training_data = dataset.get_training_data()
-    data_of_interest = dict_training_data['59d638667bfe0b5f22bd6420: Motek - Erebus Unmount'][2] # Change the random time-series as desired
+    data_of_interest = dict_training_data['59d638667bfe0b5f22bd6420: Motek - Erebus Unmount'][] # Change the random time-series as desired
     for state_data in data_of_interest:
         ts_data.append(state_data.values())
     data_nd = np.array(ts_data)

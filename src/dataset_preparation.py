@@ -75,7 +75,7 @@ class Dataset:
         for idx, dat in enumerate(data):
             df = pd.DataFrame(data[idx][0])
             nd_array=df.values
-            nd_time = nd_array[:,0:1]
+            nd_time = nd_array[:,0:1] # Slicing the time stamp
             nd_array = nd_array[:,1:4]
             list_nd_array.append(nd_array)
             list_nd_time.append(nd_time)
@@ -84,7 +84,7 @@ class Dataset:
 
         for idx, state in enumerate(states):
             state = tuple(state)
-            states_dict = {state[0]: [idx]}
+            states_dict = {state[0]: [idx]} # Putting the states into a dictionary form
             list_states_dict.append(states_dict)
         nd_dict_states = np.array(list_states_dict)
         return arr_list_nd_array, nd_dict_states, arr_list_nd_time
