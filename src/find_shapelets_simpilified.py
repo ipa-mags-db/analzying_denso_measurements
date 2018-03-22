@@ -1,20 +1,17 @@
+#!/usr/bin/env python
 import argparse
-import csv
 import numpy as np
 import time
 from collections import defaultdict
 from scipy.signal._peak_finding import argrelmax, argrelmin
 import pylab as plt
-from sklearn.cross_validation import KFold
-from import_csv_db import import_db
 from utilities import keydefaultdict, powerset, find_nearest, Counter
 from shapelet_utils import subsequences, z_normalize, distance_matrix3D
 import shapelet_utils
 from clustering import Clustering
 from classifier import ShapeletClassifier
-import matplotlib
-import pandas as pd
-import pickle
+from dataset_preparation import Dataset, bringup
+import cPickle as pickle
 
 BLUE = "#2b83ba"
 RED = "#d7191c"
@@ -180,7 +177,6 @@ class ShapeletFinder(object):
                     key = (label, dimension_subset, window)
                     classifier_candidates = self.build_classifier(self.shapelets[key], binary_target, label,
                                                                   dimension_subset)
-
                     for c_i, classifier in enumerate(classifier_candidates):
                         try:
                             if self.cmp_classifier(bsf_classifier[label], classifier) > 0:
@@ -189,7 +185,7 @@ class ShapeletFinder(object):
                             bsf_classifier[label] = classifier
                     c.printProgress(ds_i * len(self.windows) + w_i + 1)
             bsf_classifier[label] = bsf_classifier[label], binary_target
-        return bsf_classifier, shapelets
+        return bsf_classifier
 
     def precompute_bmd(self, data):
         """
@@ -221,7 +217,6 @@ class ShapeletFinder(object):
         :param data: list of training examples
         :type data: np.array
         """
-
         self.z_data = dict()
         for w in self.windows:
             for ts_id, ts in enumerate(data):
@@ -230,7 +225,7 @@ class ShapeletFinder(object):
     def prune_shapelet_candidates(self, shapelet_length, dim_s=(0,)):
         """
         Employs pruning techniques to reduce the number of shapelet candidates from self.z_data
-        :param shapelet_length: length of the shapelets
+        :param shapelet_length: length of the shapelets 
         :type shapelet_length: int
         :param dim_s: list of shapelet dimensions
         :type dim_s: tuple(int)
@@ -271,7 +266,7 @@ class ShapeletFinder(object):
         Creates classifiers for a list of shapelets
         :param shapelets: list of shapelet candidates
         :type shapelets: np.array, shape = (|candidates|, len(s), len(dim(s)))
-        :param target: binary target, 1 if training examples contains 'label', 0 otherwise
+        :param target: binary target, 1 if training examples contains 'label', 0 otherwise 
         :type target: np.array, shape = (len(dataset))
         :param label: event label for which the 'target' was created
         :type label: str
@@ -289,10 +284,65 @@ class ShapeletFinder(object):
                                range(self.data.shape[0])])
             cls.fit_precomputed(dist_X, target)
             classifiers.append(cls)
-            cls_2 = ShapeletClassifier(shapelet, dim_s=dim_s)
-            self.information_gain, self.delta, self.f_c_delta = cls_2.fit_precomputed(dist_X, target)
-            delt, f_c_delt = self.delta, self.f_c_delta
-        return classifiers, delt, f_c_delt # returning a cls object and dist_X to be used later
+        return classifiers
+
+
+class Evaluation(object):
+    def __init__(self, c, d_max, N_max, sigma_min, w_ext, sl_max):
+        """
+        :param c: classifier class
+        :type c: ShapeletClassifier
+        :param d_max: values for d_max that will be tested
+        :type d_max: list(float)
+        :param N_max: values for N_max that will be tested
+        :type N_max: list(int)
+        :param sigma_min: values for sigma_min that will be tested
+        :type sigma_min: list(float)
+        :param w_ext: values for w_ext that will be tested
+        :type w_ext: list(int)
+        :param sl_max: values for sl_max that will be tested
+        :type sl_max: list(int)
+        """
+        self.d_max = d_max
+        self.sigma_min = sigma_min
+        self.sl_max = sl_max
+        self.c = c
+        self.n_max = N_max
+        self.w_ext = w_ext
+
+    def eval(self, data, states, mode="cv", result_file_name=""):
+        """
+        Evaluates our classification algorithm.
+        :param data: the whole data set
+        :type data: np.array, shape = (len(dataset),)
+        :param ground_truth: list containing dicts for each training example. The dicts have the event label as key
+                                and a list of time indices for each occurrence as value.
+        :type ground_truth: np.array, shape = (len(dataset),)
+        :param mode: "cv", for 10-fold cross validation
+                     int, for int% training set and 100-int% test set
+                     None, for 100% training and test set
+        :param result_file_name: name of the file in which the results will be stored
+        :type result_file_name:
+        :return: result from the last training
+        """
+        d_max = self.d_max[0]
+        sigma_min = self.sigma_min[0]
+        N_max = self.n_max[0]
+        w_ext = self.w_ext[0]
+        sl_max = self.sl_max[0]
+
+        # data_train, data_test, target_train, target_test = train_test_split(
+        #     data, ground_truth, test_size=1, random_state=42)
+        sml = self.c(d_max=d_max, N_max=N_max, sigma_min=sigma_min, w_ext=w_ext, sl_max=sl_max)
+        print("d_max={}, sigma_min={}, w_ext={}, n_max={} sl_max={}----------------".format(d_max,sml.sigma_min, sml.w_ext, N_max, sl_max))
+        times = []
+        t = time.time()
+        result = sml.findingshapelets(data, states)
+        times.append(time.time() - t)
+        with open('../results/result.dat', 'w') as file:
+            pickle.dump(dict(result), file)
+        sml.reset()
+        return result
 
 
 def plot_shapelet(ax, shapelet, axis, time=None, linethickness=LT, colors=colors, label=label):
@@ -306,6 +356,7 @@ def plot_shapelet(ax, shapelet, axis, time=None, linethickness=LT, colors=colors
         else:
             lines[label[a]] = ax.plot(time, shapelet[:, i], colors[a], label=label[a], linewidth=linethickness)[0]
     return lines
+
 
 def plot_all_shapelets(result):
     f, rows = plt.subplots(2, 2, sharex=True)
@@ -331,197 +382,21 @@ def plot_all_shapelets(result):
     plt.show()
 
 
-def get_training_data(): # getting the dictionary from the pickeled file
-    with open("../dataset/data.dat", "rb") as file:
-        dict_training_data = pickle.load(file)
-    #print "states: ",dict_training_data.keys()
-    return dict_training_data
-
-
-def separate_state(dict_training_data):
-    '''
-    input: dict_training_data
-    output: list of dictionaries; every state appearance and its corresponding measurements
-    '''
-
-    list_data_state_dict = []
-    data_list = []
-    data_state_dict = {}
-    list_dict = []
-    dict = {}
-    for state in dict_training_data.keys():
-        for i in range(len(dict_training_data[state])):
-            key = state
-            data_list = dict_training_data[state][i]
-            data_state_dict = {key: data_list}
-            #list_data_state_dict = list(data_state_dict)
-            list_dict.append(data_state_dict)
-    return list_dict
-
-
-def separating_list_dict(list_dict):
-
-    '''
-    input: list of dictionaries; every state appearance and its corresponding measurements
-    outputs: list of data and the corresponding list of targets
-    '''
-
-    data = []
-    targets = []
-
-    for idx, state_data in enumerate(list_dict):
-        targets.append(state_data.keys())
-        data.append(state_data.values())
-    return data, targets
-
-def list_to_ndarray(data,states):
-
-    '''
-    input: list of data and the corresponding list of targets
-    output:
-    '''
-    list_states_dict = []
-    list_nd_array = []
-    list_nd_time = []
-    for idx, dat in enumerate(data):
-        df = pd.DataFrame(data[idx][0])
-        nd_array=df.values
-        nd_time = nd_array[:,0:1]
-        nd_array = nd_array[:,1:4]
-        list_nd_array.append(nd_array)
-        list_nd_time.append(nd_time)
-
-    #print "list_nd_array", list_nd_array
-    arr_list_nd_array = np.array(list_nd_array)
-
-    #print "arr_list_nd_array", arr_list_nd_array
-
-    for idx, state in enumerate(states):
-        state = tuple(state)
-        states_dict = {state[0]: [idx]}
-        list_states_dict.append(states_dict)
-    nd_states_dict = np.array(list_states_dict)
-
-    #print "nd_time: ", list_nd_time
-    #print"nd_targets: ", nd_targets
-    #print "nd_states_dict: ", nd_states_dict
-    #print "length of the data list of arries: ", len(list_nd_array)
-    #print "shape of the states array", nd_states_dict.shape
-    return arr_list_nd_array, nd_states_dict, list_nd_time
-
-def removing_faulty_readings(list_nd_array, nd_states_dict, list_nd_time):
-
-    unfaulty_list_nd_array = list()
-    idx_fault = list()
-    #print "len(list_nd_array): ", len(list_nd_array)
-    for idx, data in enumerate(list_nd_array):
-        if not data.size:
-            idx_fault.append(idx)
-        else:
-            unfaulty_list_nd_array.append(data)
-    #print "list_unfaulty_nd_array: ", np.array(unfaulty_list_nd_array)
-    #print "list of faulty indexes", idx_fault
-    #print "len(list_unfaulty_nd_array): ", len(unfaulty_list_nd_array)
-
-    unfaulty_nd_states_dict = np.delete(nd_states_dict, idx_fault)
-    unfaulty_list_nd_time = np.delete(list_nd_time, idx_fault)
-    #print "len(unfaulty_nd_states_dict)", len(unfaulty_nd_states_dict)
-    #print "unfaulty_nd_states_dict: ",np.array(unfaulty_nd_states_dict)
-
-    return np.array(unfaulty_list_nd_array), np.array(unfaulty_nd_states_dict) , np.array(unfaulty_list_nd_time) # States of interests lie in this subset"White Part Mount Tilted"
-
-
-def extract_state_interest(unfaulty_list_nd_array, unfaulty_nd_states_dict):
-    states_interest = ['59d638667bfe0b5f22bd6443: Motek - White Part Mount Tilted','59d638667bfe0b5f22bd6446: Pitasc-Sub - White Part Mount Tilted']
-    #states_interest = ['59d638667bfe0b5f22bd6449: Pitasc - Insert Upright', '59d638667bfe0b5f22bd6420: Motek - Erebus Unmount']
-    data = []
-    states = []
-    for idx, state in enumerate(unfaulty_nd_states_dict):
-        for state_interest in states_interest:
-            if state.keys()[0] == state_interest:
-                state_dict = unfaulty_nd_states_dict[idx]
-                states.append(state_dict)
-                data.append(unfaulty_list_nd_array[idx])
-
-    return np.array(data), np.array(states)
-
-
-def reform_ground_truth(ground_truth_shapelet):
-
-    labels = list()
-    empty_idx = list()
-    for idx, data in  enumerate(ground_truth_shapelet):
-        if not bool(data.keys()):
-            #print"empty dict"
-            empty_idx.append(idx)
-        else:
-            labels.append(data.keys()[0])
-    for i in empty_idx:
-            labels.insert(i, 'Null')
-    #print"labels: ", labels
-    labels = np.array(labels)
-    list_dict = []
-    for idx, dictionary in enumerate(ground_truth_shapelet):
-        if idx not in empty_idx:
-            simplified_dict = {labels[idx]: dictionary[labels[idx]]}
-            list_dict.append(simplified_dict)
-    for i in empty_idx:
-        list_dict.insert(i, '{}')
-
-    arr_list_dict = np.array(list_dict)
-    #print "simplified_dict: ", arr_list_dict
-    return arr_list_dict
-
-
-def printing_shapelet_data(data, ground_truth):
-
-    print "ground_truth: ", ground_truth
-    #print "data: ", data
-    print "shape.data)", data.shape
-    #print "shape.ground_truth", ground_truth.shape
-
-
-def printing_denso_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time):
-
-    #print "nd_states_dict: ", nd_states_dict
-    #print "list_nd_array: ", list_nd_array
-    print "unfaulty_list_nd_array.shape", len(unfaulty_list_nd_array[1])
-    print "unfaulty_nd_states_dict.shape ", len(unfaulty_nd_states_dict[0])
-    print "unfaulty_list_nd_time.shape ", len(unfaulty_list_nd_time[1])
-
-
-def save_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time):
-    pickle.dump(unfaulty_list_nd_array, open( "../denso_data/unfaulty_list_nd_array.dat", "wb" ))
-    pickle.dump(unfaulty_nd_states_dict, open( "../denso_data/unfaulty_nd_states_dict.dat", "wb" ))
-    pickle.dump(unfaulty_list_nd_time, open( "../denso_data/unfaulty_list_nd_time.dat", "wb" ))
-
-def saving_generated_shapelets(shapelets):
-                           
-    pickle.dump(dict(shapelets), open( "../shapelets_data/shapelets.dat", "wb" ))
-
-def main():
-
-    dict_training_data = get_training_data()
-    list_dict = separate_state(dict_training_data)
-    data_denso, states_denso = separating_list_dict(list_dict)
-    list_nd_array, nd_states_dict, list_nd_time = list_to_ndarray(data_denso, states_denso)
-    unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time= removing_faulty_readings(list_nd_array, nd_states_dict, list_nd_time)
-    data_denso, states_denso = extract_state_interest(unfaulty_list_nd_array, unfaulty_nd_states_dict)
-    save_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time)
-    printing_denso_data(unfaulty_list_nd_array, unfaulty_nd_states_dict, unfaulty_list_nd_time)
-
-
-    #data_shapelet, ground_truth_shapelet = import_db()
-    #ground_truth_shapelet_reformed = reform_ground_truth(ground_truth_shapelet)
-    #printing_shapelet_data(data_shapelet, ground_truth_shapelet_reformed)
-    find_shapelet = ShapeletFinder()
-    #bsf_classifier, shapelets = find_shapelet.findingshapelets(data_shapelet, ground_truth_shapelet_reformed)
-    bsf_classifier, shapelets = find_shapelet.findingshapelets(data_denso, states_denso)
-    #saving_generated_shapelets(shapelets)
-    #plot_all_shapelets(bsf_classifier)
-    print "Finishing...."
+def main(mode):
+    dataset = Dataset
+    data_denso, states_denso = bringup()# Denso dataset
+    #data, ground_truth = import_db()# Shapelets dataset
+    evaluation = Evaluation(c=ShapeletFinder, d_max=[.5], N_max=[3], w_ext=[25], sigma_min=[None], sl_max=[50])
+    if mode == "cv":
+        result = evaluation.eval(data_denso, states_denso)
+        print "Finishing.."
+    #plot_all_shapelets(result)
 
 
 if __name__ == '__main__':
-
-    main()
+    # seeded to make the experiments repeatable
+    np.random.seed(1)
+    parse = argparse.ArgumentParser()
+    parse.add_argument("--mode", type=str, default="cv")
+    args, unknown = parse.parse_known_args()
+    main(args.mode)

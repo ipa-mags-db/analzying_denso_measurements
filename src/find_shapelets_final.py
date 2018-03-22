@@ -14,7 +14,6 @@ from shapelet_utils import subsequences, z_normalize, distance_matrix3D
 import shapelet_utils
 from clustering import Clustering
 from classifier import ShapeletClassifier
-from find_shapelets_simpilified import get_training_data,separate_state,separating_list_dict,list_to_ndarray, removing_faulty_readings
 import pandas as pd
 import pickle
 
@@ -230,7 +229,7 @@ class ShapeletFinder(object):
     def prune_shapelet_candidates(self, shapelet_length, dim_s=(0,)):
         """
         Employs pruning techniques to reduce the number of shapelet candidates from self.z_data
-        :param shapelet_length: length of the shapelets 
+        :param shapelet_length: length of the shapelets
         :type shapelet_length: int
         :param dim_s: list of shapelet dimensions
         :type dim_s: tuple(int)
@@ -271,7 +270,7 @@ class ShapeletFinder(object):
         Creates classifiers for a list of shapelets
         :param shapelets: list of shapelet candidates
         :type shapelets: np.array, shape = (|candidates|, len(s), len(dim(s)))
-        :param target: binary target, 1 if training examples contains 'label', 0 otherwise 
+        :param target: binary target, 1 if training examples contains 'label', 0 otherwise
         :type target: np.array, shape = (len(dataset))
         :param label: event label for which the 'target' was created
         :type label: str
@@ -421,7 +420,7 @@ class Evaluation(object):
         target = np.array([x.keys() for x in ground_truth])
         times = []
         t = time.time()
-        result, shapelets = sml.findingshapelets(data, ground_truth)
+        result = sml.findingshapelets(data, ground_truth)
         times.append(time.time() - t)
 
         ts_data = []
